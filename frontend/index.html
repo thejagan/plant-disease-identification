@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thor - Plant Disease Prediction</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Chart.js and jsPDF -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Navigation / Header -->
+        <header class="navbar">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">THOR</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" id="nav-analyze" class="active">Analyze</a>
+                <a href="#" id="nav-history">History</a>
+                <a href="#" id="nav-analytics">Analytics</a>
+                <a href="#" id="nav-about">About</a>
+                <button id="install-app" class="btn-secondary small" style="margin-left: 10px; display: none;">Install
+                    App</button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="dashboard">
+            <div class="hero-section">
+                <h1>Plant Health Intelligence</h1>
+                <p>Advanced AI-driven diagnostics for your crops.</p>
+            </div>
+
+            <div class="upload-card glass-panel" id="drop-zone">
+                <div class="upload-content">
+                    <div class="icon-upload">☁️</div>
+                    <h3>Upload Leaf Image</h3>
+                    <p id="upload-text">Drag & drop or click to browse</p>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <button class="btn-primary" onclick="document.getElementById('file-input').click()">Select
+                        File</button>
+                </div>
+            </div>
+
+            <!-- Analytics Section (Hidden by default) -->
+            <div id="analytics-section" class="analytics-container hidden">
+                <div class="glass-panel chart-card">
+                    <h3>Disease Distribution</h3>
+                    <canvas id="diseaseChart"></canvas>
+                </div>
+                <!-- You could add more charts here -->
+            </div>
+
+            <!-- Loading State -->
+            <div id="loading" class="loading-state hidden">
+                <div class="spinner"></div>
+                <p>Analyzing leaf structure...</p>
+            </div>
+
+            <!-- Results Section -->
+            <div id="result-container" class="results-grid hidden">
+                <div class="result-card glass-panel">
+                    <div class="image-preview">
+                        <img id="preview-img" src="" alt="Analyzed Leaf">
+                    </div>
+                    <div class="diagnosis-info">
+                        <span class="label">Diagnosis</span>
+                        <h2 id="disease-name">Disease Name</h2>
+
+                        <div class="confidence-section">
+                            <span class="label">Confidence</span>
+                            <div class="progress-bar-bg">
+                                <div class="progress-bar-fill" id="confidence-fill"></div>
+                            </div>
+                            <span id="confidence-text" class="confidence-value">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="treatment-card glass-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3>Recommended Action</h3>
+                        <button id="download-report" class="btn-secondary small" style="margin: 0;">Download Report
+                            📄</button>
+                    </div>
+                    <div class="treatment-content">
+                        <p class="snippet">
+                            Our AI has detected potential issues matching <span id="disease-query"
+                                class="highlight-disease">this profile</span>.
+                            <br><br>
+                            Recommended next steps:
+                        <ul class="treatment-list">
+                            <li>Isolate the affected plant immediately.</li>
+                            <li>Check soil moisture levels.</li>
+                            <li>Consult an agronomists for targeted fungicide application.</li>
+                        </ul>
+                        </p>
+                        <button class="btn-secondary">View Full Report</button>
+                        <button class="btn-secondary" onclick="location.reload()">Analyze Another</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2026 Thor Intelligence. Powered by Advanced AI.</p>
+        </footer>
+    </div>
+
+    <!-- History Sidebar -->
+    <div id="history-sidebar" class="sidebar hidden-sidebar">
+        <div class="sidebar-header">
+            <h2>Scan History</h2>
+            <button id="close-history" class="close-btn">&times;</button>
+        </div>
+        <div id="history-list" class="history-list">
+            <!-- History items will be injected here -->
+            <p class="empty-msg">No scans yet.</p>
+        </div>
+        <button id="clear-history" class="btn-secondary small">Clear History</button>
+    </div>
+
+    <!-- About Modal -->
+    <div id="about-modal" class="modal hidden">
+        <div class="modal-content glass-panel">
+            <span id="close-about" class="close-btn" style="position: absolute; top: 15px; right: 20px;">&times;</span>
+            <h2>About Thor</h2>
+            <p>Thor Intelligence uses advanced simulated AI algorithms to detect plant diseases from leaf images.</p>
+            <br>
+            <h3>Features</h3>
+            <ul>
+                <li>Instant Disease Detection</li>
+                <li>Confidence Scoring</li>
+                <li>Detailed Treatment Plans</li>
+                <li>Local Scan History</li>
+            </ul>
+            <br>
+            <p>Version 2.0.0 (Premium)</p>
+        </div>
+    </div>
+    <div id="overlay" class="overlay hidden"></div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
